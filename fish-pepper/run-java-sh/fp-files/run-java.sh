@@ -199,7 +199,7 @@ init_java_major_version() {
         elif [ -n "${JAVA_HOME:-}" ] && [ -r "${JAVA_HOME}/release" ]; then
             full_version="$(grep -e '^JAVA_VERSION=' ${JAVA_HOME}/release | sed -e 's/.*\"\([0-9.]\{1,\}\).*/\1/')"
         else
-            full_version=$(java -version 2>&1 | grep "version \"" | sed -e 's/.*\"\([0-9.]\{1,\}\).*/\1/')
+            full_version=$(java -version 2>&1 | sed -n -e 's/.* version \"\([0-9.]\{1,\}\).*/\1/p')
         fi
         export JAVA_MAJOR_VERSION=$(echo $full_version | sed -e 's/[^0-9]*\(1\.\)\{0,1\}\([0-9]\{1,\}\).*/\2/')
     fi
